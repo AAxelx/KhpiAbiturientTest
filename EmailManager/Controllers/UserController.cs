@@ -24,7 +24,7 @@ namespace Email.Controllers
         public async Task SendEmail()
         {
             var email = "dkaz.photogrphy@gmail.com";
-            await _letterService.Send(email);
+            var result = await _letterService.Send(email, 15);
         }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailManager.BL", "EmailMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailManager", "EmailManager\EmailManager.csproj", "{F324E18B-C490-4A84-AF6B-0F2372A0045D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailManager.DAL", "EmailManager.DAL\EmailManager.DAL.csproj", "{FD4C8C03-7A28-472F-A4B3-2E583D6A17A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F324E18B-C490-4A84-AF6B-0F2372A0045D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F324E18B-C490-4A84-AF6B-0F2372A0045D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F324E18B-C490-4A84-AF6B-0F2372A0045D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD4C8C03-7A28-472F-A4B3-2E583D6A17A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4C8C03-7A28-472F-A4B3-2E583D6A17A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4C8C03-7A28-472F-A4B3-2E583D6A17A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4C8C03-7A28-472F-A4B3-2E583D6A17A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

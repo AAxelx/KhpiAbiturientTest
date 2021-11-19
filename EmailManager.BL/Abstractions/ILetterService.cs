@@ -8,6 +8,6 @@ namespace EmailManager.BL.Abstractions
 {
     public interface ILetterService
     {
-        Task Send(string receiver);
+        Task<bool> Send(string receiverAddres, int score);
     }
 }

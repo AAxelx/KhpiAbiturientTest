@@ -3,8 +3,7 @@
     "SenderAddres": "testmailforprojext@gmail.com",
     "SenderName": "Національний технічний університет Харківський політехнічний iнститут",
     "Subject": "Subject of message",
-    "BodyFirstPart": "<div>Вітаємо! Ваш </div>",
-    "BodySecondpart": 
+    "BodyFirstPart": "<div>Вітаємо! Ваш </div>"
   },
 
   "SmtpClientConfiguration": {
