@@ -1,0 +1,17 @@
+{
+  "MessageConfiguration": {
+    "SenderAddres": "testmailforprojext@gmail.com",
+    "SenderName": "Національний технічний університет Харківський політехнічний iнститут",
+    "Subject": "Subject of message",
+    "BodyFirstPart": "<div>Вітаємо! Ваш </div>",
+    "BodySecondpart": 
+  },
+
+  "SmtpClientConfiguration": {
+    "SenderAddres": "testmailforprojext@gmail.com",
+    "SenderPassword": "Qwerty12345!",
+    "Host": "smtp.gmail.com",
+    "Port": 465,
+    "UseSSL": true
+  }
+}
