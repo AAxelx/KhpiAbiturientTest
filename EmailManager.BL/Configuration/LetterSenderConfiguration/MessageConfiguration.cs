@@ -11,6 +11,7 @@ namespace EmailManager.BL.Configuration
         public string SenderAddres { get; set; }
         public string SenderName { get; set; }
         public string Subject { get; set; }
-        public string Body { get; set; }
+        public string BodyFirstPart { get; set; }
+        public string BodySecondPart { get; set; }
     }
 }

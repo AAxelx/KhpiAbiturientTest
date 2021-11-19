@@ -1,6 +1,7 @@
 ﻿using EmailManager.BL.Abstractions;
 using MailKit.Net.Smtp;
 using MimeKit;
+using System;
 using System.Threading.Tasks;
 
 namespace EmailManager.BL.Services
@@ -24,7 +25,9 @@ namespace EmailManager.BL.Services
                 var senderAddres = messageConfig.SenderAddres;
                 var senderName = messageConfig.SenderName;
                 var subject = messageConfig.Subject;
-                var body = messageConfig.Body;
+                var bodyFirstPart = messageConfig.BodyFirstPart;
+                var bodySecondPart = messageConfig.BodySecondPart;
+                var body = bodyFirstPart + score + bodySecondPart;
                 var receiverParsedAddres = MailboxAddress.Parse(receiverAddres);
 
                 var message = new MimeMessage();
@@ -46,8 +49,9 @@ namespace EmailManager.BL.Services
                 }
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                var message = ex.Message;
                 return false;
             }
         }
