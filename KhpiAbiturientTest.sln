@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailManager.BL", "EmailManager.BL\EmailManager.BL.csproj", "{8500105A-A5C9-4CFA-95F3-79634E16E77D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailManager", "EmailManager\EmailManager.csproj", "{F324E18B-C490-4A84-AF6B-0F2372A0045D}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8500105A-A5C9-4CFA-95F3-79634E16E77D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8500105A-A5C9-4CFA-95F3-79634E16E77D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8500105A-A5C9-4CFA-95F3-79634E16E77D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8500105A-A5C9-4CFA-95F3-79634E16E77D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F324E18B-C490-4A84-AF6B-0F2372A0045D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F324E18B-C490-4A84-AF6B-0F2372A0045D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F324E18B-C490-4A84-AF6B-0F2372A0045D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F324E18B-C490-4A84-AF6B-0F2372A0045D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
