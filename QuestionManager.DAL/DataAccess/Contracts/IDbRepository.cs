@@ -6,9 +6,9 @@ namespace QuestionManager.DAL.DataAccess.Contracts
 {
     public interface IDbRepository
     {
-        Task<IEnumerable<T>> GetAll<T>()
+        Task<IEnumerable<T>> GetAllAsync<T>()
            where T : class, IEntity;
-        Task<T> GetById<T>(Guid id)
+        Task<T> GetByIdAsync<T>(Guid id)
             where T : class, IEntity;
         Task<T> AddAsync<T>(T newEntity)
             where T : class, IEntity;

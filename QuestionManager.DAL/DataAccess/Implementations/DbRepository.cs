@@ -15,7 +15,7 @@ namespace QuestionManager.DAL.DataAccess.Implementations
             _context = context;
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
             where T : class, IEntity
         {
             var result = await _context.Set<T>().AsQueryable().ToListAsync();
@@ -28,7 +28,7 @@ namespace QuestionManager.DAL.DataAccess.Implementations
             return result;
         }
 
-        public async Task<T> GetById<T>(Guid id)
+        public async Task<T> GetByIdAsync<T>(Guid id)
             where T : class, IEntity
         {
             var entity = await _context.Set<T>().AsQueryable().FirstOrDefaultAsync(e => e.Id == id);
