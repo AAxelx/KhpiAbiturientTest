@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuestionManager.DAL.DataAccess.Contracts;
+using QuestionManager.DAL.DataAccess.Implementations.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace QuestionManager.DAL.DataAccess.Implementations
         public async Task<bool> RemoveAsync<T>(Guid id)
             where T : class, IEntity
         {
-            var result = _context.Set<T>().AsQueryable().FirstOrDefaultAsync(u => u.Id == id);
+            var result = await _context.Set<T>().AsQueryable().FirstOrDefaultAsync(u => u.Id == id);
 
             if (result == null)
             {
@@ -73,7 +74,7 @@ namespace QuestionManager.DAL.DataAccess.Implementations
         public async Task<bool> UpdateAsync<T>(T entity)
             where T : class, IEntity
         {
-            var result = _context.Set<T>().AsQueryable().FirstOrDefaultAsync(u => u.Id == entity.Id);
+            var result = await _context.Set<T>().AsQueryable().FirstOrDefaultAsync(u => u.Id == entity.Id);
 
             if (result == null)
             {
