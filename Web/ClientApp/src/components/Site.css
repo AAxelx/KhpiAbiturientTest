@@ -1,0 +1,13 @@
+﻿
+.background {
+    height: 100vh;
+    width: 100vw;
+    background-image: src(MainImage.jpg);
+}
+
+.form {
+    padding: 40vh 0px 0px 40vw;
+    height: 30vh;
+    width: 30vw;
+    color: black;
+}
