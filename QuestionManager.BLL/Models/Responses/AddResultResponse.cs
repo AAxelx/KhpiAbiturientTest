@@ -2,9 +2,9 @@
 
 namespace QuestionManager.BLL.Models.Responses
 {
-    public class AddResponse : IServiceResponse
+    public class AddResultResponse : IServiceResponse
     {
-        public QuestionModel AddedQuestion { get; set; }
+        public bool Success { get; set; }
         public string Message { get; set; }
     }
 }
