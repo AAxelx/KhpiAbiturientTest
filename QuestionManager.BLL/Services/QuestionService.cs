@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using QuestionManager.BLL.Helpers;
 using QuestionManager.BLL.Models;
 using QuestionManager.BLL.Models.Responses;
 using QuestionManager.BLL.Models.Responses.Abstractions;
@@ -17,11 +16,17 @@ namespace QuestionManager.BLL.Services
     {
         private readonly IDbRepository _dbRepository;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
+        private readonly IGoogleSheetsService _sheetsService;
+        private readonly IEmailService _emailService;
 
-        public QuestionService(IDbRepository dbRepository, IMapper mapper)
+        public QuestionService(IDbRepository dbRepository, IMapper mapper, IUserService userService, IGoogleSheetsService sheetsService, IEmailService emailService)
         {
             _dbRepository = dbRepository;
             _mapper = mapper;
+            _userService = userService;
+            _sheetsService = sheetsService;
+            _emailService = emailService;
         }
 
         public async Task<IServiceResponse> GetAllAsync()
@@ -44,10 +49,10 @@ namespace QuestionManager.BLL.Services
                         hardResult.Add(_mapper.Map<QuestionModel>(question));
                 }
 
-                return new GetAllResponse() { EasyQuestions = easyResult, MediumQuestions = mediumResult, HardQuestions = hardResult};
+                return new GetAllQuestionsResponse() { EasyQuestions = easyResult, MediumQuestions = mediumResult, HardQuestions = hardResult};
             }
 
-            return new AddResponse() { Message = "Questions wasn't found" };
+            return new AddQuestionResponse() { Message = "Questions wasn't found" };
         }
 
         public async Task<IServiceResponse> AddAsync(string question, string answear, int complexity, string secondOption, string thirdOption)
@@ -66,10 +71,10 @@ namespace QuestionManager.BLL.Services
             {
                 var questionModel = _mapper.Map<QuestionModel>(result);
 
-                return new AddResponse() { AddedQuestion = questionModel };
+                return new AddQuestionResponse() { AddedQuestion = questionModel };
             }
 
-            return new AddResponse() { Message = "The question was not added" };
+            return new AddQuestionResponse() { Message = "The question was not added" };
         }
 
         public async Task<IServiceResponse> DeleteAsync(Guid questionId)
@@ -100,15 +105,22 @@ namespace QuestionManager.BLL.Services
                     score += entity.Complexity;
             }
 
-            // send to Kazya request: var result = _UserService.AddResultAsync(email, score);
+            var SqlSuccess = (AddResultResponse)await _userService.AddResultAsync(email, score);
 
-            var result = true;
-            if (result)
+            if (SqlSuccess.Success)
             {
-                return new CalculatePointsResponse() { Success = result };
+                var user = new string[4] {email, score.ToString(), "", ""};
+
+                var googleSheetsSuccess = _sheetsService.AddUser(user);
+                //var result = _emailService.SendLetter(email);
+
+                if (googleSheetsSuccess)
+                {
+                    return new CalculatePointsResponse() { Success = SqlSuccess.Success };
+                }
             }
 
-            return new DeleteResponse() { Message = "Something went wrong" };
+            return new DeleteResponse() { Message = SqlSuccess.Message };
         }
     }
 }
