@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{1E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A91FAA08-175B-415D-9E14-1CD13DF6342F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionManager", "QuestionManager\QuestionManager.csproj", "{4D98DAF8-2E68-457D-B770-F6C026B6FB18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestionManager", "QuestionManager\QuestionManager.csproj", "{4D98DAF8-2E68-457D-B770-F6C026B6FB18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionManager.BLL", "QuestionManager.BLL\QuestionManager.BLL.csproj", "{CCA995B1-ABB9-4DEC-9E18-449F61FD9855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestionManager.BLL", "QuestionManager.BLL\QuestionManager.BLL.csproj", "{CCA995B1-ABB9-4DEC-9E18-449F61FD9855}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionManager.DAL", "QuestionManager.DAL\QuestionManager.DAL.csproj", "{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestionManager.DAL", "QuestionManager.DAL\QuestionManager.DAL.csproj", "{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
