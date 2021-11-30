@@ -12,6 +12,8 @@ namespace QuestionManager.DAL.DataAccess.Contracts
             where T : class, IEntity;
         Task<T> AddAsync<T>(T newEntity)
             where T : class, IEntity;
+        Task<bool> GetByEmail<T>(string email)
+            where T : class, IEntity;
         Task<bool> UpdateAsync<T>(T entity)
             where T : class, IEntity;
         Task<bool> RemoveAsync<T>(Guid id)

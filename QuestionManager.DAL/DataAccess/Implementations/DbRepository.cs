@@ -42,6 +42,19 @@ namespace QuestionManager.DAL.DataAccess.Implementations
             return entity;
         }
 
+        public async Task<bool> GetByEmail<T>(string email)
+            where T : class, IEntity
+        {
+            var entity = await _context.Set<UserEntity>().AsQueryable().FirstOrDefaultAsync(e => e.Email == email);
+
+            if(entity != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<T> AddAsync<T>(T newEntity)
             where T : class, IEntity
         {
