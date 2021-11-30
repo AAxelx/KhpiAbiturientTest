@@ -1,21 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using QuestionManager.BLL.Helpers;
 using QuestionManager.BLL.Services;
 using QuestionManager.BLL.Services.Abstractions;
 using QuestionManager.DAL.DataAccess.Contracts;
 using QuestionManager.DAL.DataAccess.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace QuestionManager
 {
@@ -31,8 +24,11 @@ namespace QuestionManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>();
-            services.AddScoped<IQuestionService, QuestionService>();
-            services.AddScoped(typeof(IDbRepository), typeof(DbRepository));
+            services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IGoogleSheetsService, GoogleSheetsService>();
+            services.AddTransient(typeof(IDbRepository), typeof(DbRepository));
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddControllers();
