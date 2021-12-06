@@ -15,32 +15,17 @@ namespace EmailManager.BL.Services
             _configurationService = configurationService;
         }
 
-        public async Task<bool> Send(string receiverAddres, int score)
+        // Принимает обьект MimeMessage
+        // Возвращает истину если письмо было отправлено, ложь - если при отправке возникли ошибки.
+        // Используется нугет пакет MimeKit
+        public async Task<bool> SendAsync(MimeMessage message)
         {
             try
             {
-                var config = _configurationService.GetLetterConfiguration();
-                var messageConfig = config.MessageConfiguration;
-
-                var senderAddres = messageConfig.SenderAddres;
-                var senderName = messageConfig.SenderName;
-                var subject = messageConfig.Subject;
-                var bodyFirstPart = messageConfig.BodyFirstPart;
-                var bodySecondPart = messageConfig.BodySecondPart;
-                var body = bodyFirstPart + score + bodySecondPart;
-                var receiverParsedAddres = MailboxAddress.Parse(receiverAddres);
-
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress(senderName, senderAddres));
-                message.To.Add(receiverParsedAddres);
-                message.Subject = subject;
-                var bodyBuilder = new BodyBuilder();
-                message.Body = new BodyBuilder() { HtmlBody = body }.ToMessageBody();
+                var smtpConfig = _configurationService.GetSmtpClientConfiguration();
 
                 using (var client = new SmtpClient())
                 {
-                    var smtpConfig = config.SmtpClientConfiguration;
-
                     client.Connect(smtpConfig.Host, smtpConfig.Port, smtpConfig.UseSSL);
                     client.Authenticate(smtpConfig.SenderAddres, smtpConfig.SenderPassword);
                     await client.SendAsync(message);
@@ -49,9 +34,8 @@ namespace EmailManager.BL.Services
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                var message = ex.Message;
                 return false;
             }
         }

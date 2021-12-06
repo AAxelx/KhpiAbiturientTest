@@ -10,5 +10,7 @@ namespace EmailManager.BL.Abstractions
     public interface IConfigurationService
     {
         LetterConfiguration GetLetterConfiguration();
+        public MessageConfiguration GetMessageConfiguration();
+        public SmtpClientConfiguration GetSmtpClientConfiguration();
     }
 }

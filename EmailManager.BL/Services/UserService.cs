@@ -13,13 +13,16 @@ namespace EmailManager.BL.Services
     {
         public readonly IDbRepository _repository;
         public readonly ILetterService _letterService;
+        private readonly IMessageService _messageService;
 
         public UserService(
             IDbRepository repository,
-            ILetterService letterService)
+            ILetterService letterService,
+            IMessageService messageService)
         {
             _repository = repository;
             _letterService = letterService;
+            _messageService = messageService;
         }
 
         public async Task<bool> AddResultAsync(string email, int score)
@@ -28,7 +31,8 @@ namespace EmailManager.BL.Services
             var result = await _repository.AddAsync<UserEntity>(user);
             if(result != null)
             {
-                var sendingResult = await _letterService.Send(result.Email, result.Score);
+                var messageSettings = _messageService.CreateMessageDetails(result.Email, result.Score);
+                var sendingResult = await _letterService.SendAsync(messageSettings);
                 if (sendingResult == true)
                 {
                     return true;

@@ -30,6 +30,7 @@ namespace Email
         {
             services.AddTransient<ILetterService, LetterService>();
             services.AddTransient<IConfigurationService, ConfigurationService>();
+            services.AddTransient<IMessageService, MessageService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

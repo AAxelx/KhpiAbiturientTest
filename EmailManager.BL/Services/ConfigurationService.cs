@@ -18,5 +18,17 @@ namespace EmailManager.BL.Services
             var config = JsonConvert.DeserializeObject<LetterConfiguration>(configFile);
             return config;
         }
+
+        public MessageConfiguration GetMessageConfiguration()
+        {
+            var config = GetLetterConfiguration().MessageConfiguration;
+            return config;
+        }
+
+        public SmtpClientConfiguration GetSmtpClientConfiguration()
+        {
+            var config = GetLetterConfiguration().SmtpClientConfiguration;
+            return config;
+        }
     }
 }

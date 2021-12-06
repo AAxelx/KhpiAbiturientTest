@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace EmailManager.BL.Abstractions
 {
-    public interface ILetterService
+    public interface IMessageService
     {
-        public Task<bool> SendAsync(MimeMessage message);
+        public MimeMessage CreateMessageDetails(string receiverAddres, int score);
     }
 }
