@@ -5,9 +5,7 @@ namespace QuestionManager.BLL.Models.Responses
 {
     public class GetAllQuestionsResponse : IServiceResponse
     {
-        public List<QuestionModel> EasyQuestions { get; set; }
-        public List<QuestionModel> MediumQuestions { get; set; }
-        public List<QuestionModel> HardQuestions { get; set; }
+        public List<QuestionModel> Questions { get; set; }
         public string Message { get; set; }
     }
 }
