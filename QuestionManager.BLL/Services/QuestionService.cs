@@ -31,28 +31,43 @@ namespace QuestionManager.BLL.Services
 
         public async Task<IServiceResponse> GetAllAsync()
         {
-            var questions = await _dbRepository.GetAllAsync<QuestionEntity>();
+            var questions = (List<QuestionEntity>) await _dbRepository.GetAllAsync<QuestionEntity>();
 
             if(questions != null)
             {
-                var easyResult = new List<QuestionModel>();
-                var mediumResult = new List<QuestionModel>();
-                var hardResult = new List<QuestionModel>();
+                var random = new Random();
+                var numbersList = new List<int>();
+                var result = new List<QuestionModel>();
+                var countEasyQuestions = 0;
+                var countMediumQuestions = 0;
+                var countHardQuestions = 0;
 
-                foreach (var question in questions)
+                do
                 {
-                    if(question.Complexity == 1)
-                        easyResult.Add(_mapper.Map<QuestionModel>(question));
-                    else if(question.Complexity == 2)
-                        mediumResult.Add(_mapper.Map<QuestionModel>(question));
-                    else
-                        hardResult.Add(_mapper.Map<QuestionModel>(question));
-                }
+                    var count = questions.Count();
+                    var questionNumber = random.Next(count);
 
-                return new GetAllQuestionsResponse() { EasyQuestions = easyResult, MediumQuestions = mediumResult, HardQuestions = hardResult};
+                    if (!numbersList.Contains(questionNumber))
+                    {
+                        if (questions[questionNumber].Complexity == 1 && countEasyQuestions != 4)
+                            countEasyQuestions++;
+                        else if (questions[questionNumber].Complexity == 2 && countMediumQuestions != 4)
+                            countMediumQuestions++;
+                        else if (questions[questionNumber].Complexity == 3 && countHardQuestions != 4)
+                            countHardQuestions++;
+                        else
+                            continue;
+
+                        numbersList.Add(questionNumber);
+                        result.Add(_mapper.Map<QuestionModel>(questions[questionNumber]));
+                    }
+                }
+                while (result.Count != 12);
+
+                return new GetAllQuestionsResponse() { Questions = result };
             }
 
-            return new AddQuestionResponse() { Message = "Questions wasn't found" };
+            return new GetAllQuestionsResponse() { Message = "Questions wasn't found" };
         }
 
         public async Task<IServiceResponse> AddAsync(string question, string answear, int complexity, string secondOption, string thirdOption)

@@ -122,8 +122,13 @@ namespace QuestionManager.BLL.Services
             var count = GetCount(services, ColumnRange);
             var previousLastTicket = GetCell(services, $"D{count}");
 
-            var firstTicket = int.Parse(previousLastTicket) + 1;
-            var lastTicket = int.Parse(previousLastTicket) + int.Parse(data[1]);
+            var firstTicket = 0;
+            var lastTicket = 0;
+            if (data[1] != "0")
+            {
+                firstTicket = int.Parse(previousLastTicket) + 1;
+                lastTicket = int.Parse(previousLastTicket) + int.Parse(data[1]);
+            }
             data[2] = firstTicket.ToString();
             data[3] = lastTicket.ToString();
 
