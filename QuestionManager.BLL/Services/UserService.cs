@@ -1,4 +1,5 @@
-﻿using QuestionManager.BLL.Models.Responses;
+﻿using QuestionManager.BLL.Helpers;
+using QuestionManager.BLL.Models.Responses;
 using QuestionManager.BLL.Models.Responses.Abstractions;
 using QuestionManager.BLL.Services.Abstractions;
 using QuestionManager.DAL.DataAccess.Contracts;
@@ -51,6 +52,21 @@ namespace QuestionManager.BLL.Services
             }
 
             return new AddResultResponse() { Message = response.Message };
+        }
+
+        public async Task<IServiceResponse> RemoveAsync(string password, Guid id)
+        {
+            if(password == "Helen2022Helen2022")
+            {
+                var result = await _dbRepository.RemoveAsync<UserEntity>(id);
+
+                if (result)
+                {
+                    return new RemoveResponse() { Success = result };
+                }
+            }
+
+            throw new KeyNotFoundException("User wasn't found");
         }
     }
 }

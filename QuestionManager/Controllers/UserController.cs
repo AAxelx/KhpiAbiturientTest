@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QuestionManager.BLL.Models.Requests;
 using QuestionManager.BLL.Services.Abstractions;
 using System.Threading.Tasks;
 
@@ -26,6 +27,14 @@ namespace QuestionManager.Controllers
             }
 
             return BadRequest(response.Message);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Remove(RemoveUserRequest request)
+        {
+            await _userService.RemoveAsync(request.Password, request.Id);
+
+            return NoContent();
         }
     }
 }
