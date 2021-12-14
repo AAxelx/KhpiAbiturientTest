@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace QuestionManager.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -21,12 +21,7 @@ namespace QuestionManager.Controllers
         {
             var response = await _userService.GetByEmailAsync(email);
 
-            if(response.Message == null)
-            {
-                return Ok(response);
-            }
-
-            return BadRequest(response.Message);
+            return Ok(response);
         }
 
         [HttpDelete]

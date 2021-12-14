@@ -22,25 +22,15 @@ namespace QuestionManager.Controllers
         {
             var response = await _questionService.GetAllAsync();
 
-            if(response.Message == null)
-            {
-                return Ok(response);
-            }
-
-            return NotFound(response.Message);
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(AddRequest request)
         {
-            var response = await _questionService.AddAsync(request.Question, request.Answear, request.Complexity, request.SecondOption, request.ThirdOption);
+            await _questionService.AddAsync(request.Question, request.Answear, request.Complexity, request.SecondOption, request.ThirdOption);
 
-            if(response.Message == null)
-            {
-                return Ok(response);
-            }
-
-            return BadRequest(response.Message);
+            return Created();
         }
 
 
