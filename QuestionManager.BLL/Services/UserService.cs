@@ -27,31 +27,26 @@ namespace QuestionManager.BLL.Services
                 return new GetByEmailResponse() { Created = created };
             }
 
-            return new GetByEmailResponse() { Message = "The user is already taking part." };
+            throw new AppException("The user is already taking part");
         }
 
         public async Task<IServiceResponse> AddResultAsync(string email, int score)
         {
-            var response = await GetByEmailAsync(email);
+            await GetByEmailAsync(email);
 
-            if(response.Message == null)
+            var result = await _dbRepository.AddAsync(new UserEntity()
             {
-                var result = _dbRepository.AddAsync(new UserEntity()
-                {
-                    Id = Guid.NewGuid(),
-                    Email = email,
-                    Score = score
-                });
+                Id = Guid.NewGuid(),
+                Email = email,
+                Score = score
+            });
 
-                if(result != null)
-                {
-                    return new AddResultResponse() { Success = true };
-                }
-
-                response.Message = response.Message + "The user wasn't added to database";
+            if (result != null)
+            {
+                return new AddResultResponse() { Success = true };
             }
 
-            return new AddResultResponse() { Message = response.Message };
+            throw new AppException("The user wasn't added to database");
         }
 
         public async Task<IServiceResponse> RemoveAsync(string password, Guid id)

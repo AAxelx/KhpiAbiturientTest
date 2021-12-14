@@ -3,6 +3,7 @@ using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
+using QuestionManager.BLL.Helpers;
 using QuestionManager.BLL.Services.Abstractions;
 using System.Collections.Generic;
 using System.IO;
@@ -140,7 +141,7 @@ namespace QuestionManager.BLL.Services
                 return true;
             }
 
-            return false;
+            throw new AppException("Result wasn't added to Google Sheets");
         }
     }
 }

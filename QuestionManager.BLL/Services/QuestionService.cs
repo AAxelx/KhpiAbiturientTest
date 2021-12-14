@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using QuestionManager.BLL.Helpers;
 using QuestionManager.BLL.Models;
 using QuestionManager.BLL.Models.Responses;
 using QuestionManager.BLL.Models.Responses.Abstractions;
@@ -67,7 +68,7 @@ namespace QuestionManager.BLL.Services
                 return new GetAllQuestionsResponse() { Questions = result };
             }
 
-            return new GetAllQuestionsResponse() { Message = "Questions wasn't found" };
+            throw new Helpers.KeyNotFoundException("Questions wasn't found");
         }
 
         public async Task<IServiceResponse> AddAsync(string question, string answear, int complexity, string secondOption, string thirdOption)
@@ -89,7 +90,7 @@ namespace QuestionManager.BLL.Services
                 return new AddQuestionResponse() { AddedQuestion = questionModel };
             }
 
-            return new AddQuestionResponse() { Message = "The question was not added" };
+            throw new AppException("The question was not added");
         }
 
         public async Task<IServiceResponse> DeleteAsync(Guid questionId)
@@ -101,15 +102,29 @@ namespace QuestionManager.BLL.Services
                 return new DeleteResponse() { IsRemoved = isRemoved };
             }
 
-            return new DeleteResponse() { Message = "The question was not deleteded" };
+            throw new Helpers.KeyNotFoundException("The question was not deleteded");
         }
 
-        public async Task<IServiceResponse> CalculatePointsAsync(List<AnswearModel> questions, string email)
+        public async Task<IServiceResponse> SaveResultAsync(List<AnswearModel> questions, string email)
+        {
+            var score = await CalculatePointsAsync(questions);
+
+            await _userService.AddResultAsync(email, score);
+
+            var user = new string[4] { email, score.ToString(), "", "" };
+
+            var googleSheetsSuccess = _sheetsService.AddUser(user);
+            //var result = _emailService.SendLetter(email);
+
+            return new CalculatePointsResponse() { Success = googleSheetsSuccess };
+        }
+
+        public async Task<int> CalculatePointsAsync(List<AnswearModel> questions)
         {
             var questionEntities = await _dbRepository.GetAllAsync<QuestionEntity>();
             var score = 0;
 
-            foreach(var question in questions)
+            foreach (var question in questions)
             {
                 var entity = questionEntities.FirstOrDefault(q => q.Id == question.Id);
 
@@ -120,22 +135,7 @@ namespace QuestionManager.BLL.Services
                     score += entity.Complexity;
             }
 
-            var SqlSuccess = (AddResultResponse)await _userService.AddResultAsync(email, score);
-
-            if (SqlSuccess.Success)
-            {
-                var user = new string[4] {email, score.ToString(), "", ""};
-
-                var googleSheetsSuccess = _sheetsService.AddUser(user);
-                //var result = _emailService.SendLetter(email);
-
-                if (googleSheetsSuccess)
-                {
-                    return new CalculatePointsResponse() { Success = SqlSuccess.Success };
-                }
-            }
-
-            return new DeleteResponse() { Message = SqlSuccess.Message };
+            return score;
         }
     }
 }

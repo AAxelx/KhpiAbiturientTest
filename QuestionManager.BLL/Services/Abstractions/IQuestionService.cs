@@ -11,6 +11,7 @@ namespace QuestionManager.BLL.Services.Abstractions
         Task<IServiceResponse> GetAllAsync();
         Task<IServiceResponse> AddAsync(string question, string answear, int complexity, string secondOption, string thirdOption);
         Task<IServiceResponse> DeleteAsync(Guid questionId);
-        Task<IServiceResponse> CalculatePointsAsync(List<AnswearModel> questions, string email);
+        Task<IServiceResponse> SaveResultAsync(List<AnswearModel> questions, string email);
+        Task<int> CalculatePointsAsync(List<AnswearModel> questions);
     }
 }

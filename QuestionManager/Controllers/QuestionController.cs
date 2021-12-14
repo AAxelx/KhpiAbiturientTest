@@ -28,9 +28,9 @@ namespace QuestionManager.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddRequest request)
         {
-            await _questionService.AddAsync(request.Question, request.Answear, request.Complexity, request.SecondOption, request.ThirdOption);
+            var response = await _questionService.AddAsync(request.Question, request.Answear, request.Complexity, request.SecondOption, request.ThirdOption);
 
-            return Created();
+            return Ok(response);
         }
 
 
@@ -39,25 +39,15 @@ namespace QuestionManager.Controllers
         {
             var response = await _questionService.DeleteAsync(questionId);
 
-            if(response.Message == null)
-            {
-                return Ok(response);
-            }
-
-            return NotFound(response.Message);
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CalculatePoints(CalculatePointsRequest request)
+        public async Task<IActionResult> SaveResult(CalculatePointsRequest request)
         {
-            var response = await _questionService.CalculatePointsAsync(request.Questions, request.Email);
+            var response = await _questionService.SaveResultAsync(request.Questions, request.Email);
 
-            if (response.Message == null)
-            {
-                return Ok(response);
-            }
-
-            return BadRequest(response.Message);
+            return Ok(response);
         }
     }
 }
