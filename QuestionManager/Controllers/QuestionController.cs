@@ -18,17 +18,34 @@ namespace QuestionManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var response = _questionService.GetAll();
+            var response = await _questionService.GetAllAsync();
 
             return Ok(response);
         }
 
         [HttpPost]
-        public IActionResult SaveResult(CalculatePointsRequest request)
+        public async Task<IActionResult> Add(AddRequest request)
         {
-            var response = _questionService.SaveResult(request.Questions, request.Email);
+            var response = await _questionService.AddAsync(request.Question, request.Answear, request.Complexity, request.SecondOption, request.ThirdOption);
+
+            return Ok(response);
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid questionId)
+        {
+            var response = await _questionService.DeleteAsync(questionId);
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveResult(CalculatePointsRequest request)
+        {
+            var response = await _questionService.SaveResultAsync(request.Questions, request.Email);
 
             return Ok(response);
         }

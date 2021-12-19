@@ -17,12 +17,19 @@ namespace QuestionManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByEmail(string email)
+        public async Task<IActionResult> GetByEmail(string email)
         {
-            var response = _userService.GetByEmailAsync(email);
+            var response = await _userService.GetByEmailAsync(email);
 
             return Ok(response);
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Remove(RemoveUserRequest request)
+        {
+            await _userService.RemoveAsync(request.Password, request.Id);
+
+            return NoContent();
+        }
     }
 }

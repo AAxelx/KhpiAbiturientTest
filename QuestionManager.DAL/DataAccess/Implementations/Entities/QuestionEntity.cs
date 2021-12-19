@@ -3,9 +3,9 @@ using System;
 
 namespace QuestionManager.DAL.DataAccess.Implementations.Entities
 {
-    public class QuestionEntity
+    public class QuestionEntity : IEntity
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Question { get; set; }
         public string Answear { get; set; }
         public int Complexity { get; set; }
