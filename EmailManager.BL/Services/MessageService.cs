@@ -24,7 +24,7 @@ namespace EmailManager.BL.Services
         {
             var messageConfig = _configurationService.GetMessageConfiguration();
 
-            var htmlBody = messageConfig.BodyFirstPart + score + messageConfig.BodySecondPart;
+            var textBody= messageConfig.BodyFirstPart + score + messageConfig.BodySecondPart;
 
             var receiverParsedAddres = MailboxAddress.Parse(receiverAddres);
 
@@ -32,7 +32,7 @@ namespace EmailManager.BL.Services
             message.From.Add(new MailboxAddress(messageConfig.SenderName, messageConfig.SenderAddres));
             message.To.Add(receiverParsedAddres);
             message.Subject = messageConfig.Subject;
-            message.Body = new BodyBuilder() { HtmlBody = htmlBody }.ToMessageBody();
+            message.Body = new BodyBuilder() { TextBody = textBody }.ToMessageBody();
 
             return message;
         }
