@@ -23,13 +23,16 @@ namespace QuestionManager
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>();
+            services.AddDbContext<AppDbContext>();//
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IConfigurationService, ConfigurationService>();
+            services.AddTransient<ILetterService, LetterService>();
+            services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IGoogleSheetsService, GoogleSheetsService>();
             services.AddTransient(typeof(IDbRepository), typeof(DbRepository));
-            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(typeof(MappingProfile));//
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

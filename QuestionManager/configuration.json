@@ -1,0 +1,15 @@
+﻿{
+  "MessageConfiguration": {
+    "SenderAddres": "khpi.abiturient.test@gmail.com",
+    "SenderName": "Національний технічний університет Харківський політехнічний iнститут",
+    "Subject": "Subject of message"
+  },
+
+  "SmtpClientConfiguration": {
+    "SenderAddres": "khpi.abiturient.test@gmail.com",
+    "SenderPassword": "Helen2022",
+    "Host": "smtp.gmail.com",
+    "Port": 465,
+    "UseSSL": true
+  }
+}
