@@ -16,8 +16,12 @@ namespace QuestionManager.BLL.Services
         private readonly string ClientSecret = "client_secret.json";
         private readonly string[] ScopesSheets = { SheetsService.Scope.Spreadsheets };
         private readonly string AppName = "Desktop client 1";
-        private const string SpreadSheetId = "1Lpl5v0KVesHfsokT8Bj3lqhvEhzqEw--xnATY6GyiBI";
-        private readonly string ColumnRange = "A:A";
+        private const string UserSpreadSheetId = "1Lpl5v0KVesHfsokT8Bj3lqhvEhzqEw--xnATY6GyiBI";
+        private const string QuestionSpreadSheetId = "1t9CyiThwrVqIjnScT5sJCDWBrJ8r2oDSprfg7JcyCyQ";
+        private const string MessageSheetId = "1yR63EG6sHJ17TFncJYqg9NwM4g79ZS3HFB4w1sALu8I";
+        private readonly string EmailRange = "A:A";
+        private readonly string QuestionsAndAnswearsRange = "A2:F1000";
+        private readonly string MessageRange = "A2";
 
         private UserCredential GetSheetCredentials()
         {
@@ -38,30 +42,38 @@ namespace QuestionManager.BLL.Services
             });
         }
 
-        private int GetCount(SheetsService service, string range, string spreadSheetId = SpreadSheetId)
+        private int GetCount(SheetsService service, string range, string sheetId)
         {
-            SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadSheetId, range);
-            ValueRange response = request.Execute();
+            var response = GetList(service, range, sheetId);
 
             var result = 0;
 
-            if (response.Values != null)
+            foreach (var value in response.Values)
             {
-                foreach (var value in response.Values)
-                {
-                    result++;
-                }
-
+                result++;
             }
 
             return result;
         }
 
-        private void AddToSheet(SheetsService service, string[] data, int rowIndex, string spreadSheetId = SpreadSheetId)
+        private ValueRange GetList(SheetsService service, string range, string spreadSheetId)
+        {
+            SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadSheetId, range);
+            ValueRange response = request.Execute();
+
+            if (response.Values != null)
+            {
+                return response;
+            }
+
+            throw new AppException("The list wasn't recieved");
+        }
+
+        private void AddToSheet(SheetsService service, string[] data, int rowIndex, string spreadSheetId)
         {
             List<Request> requests = new List<Request>();
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < data.Length; i++)
             {
                 List<CellData> values = new List<CellData>();
 
@@ -98,7 +110,7 @@ namespace QuestionManager.BLL.Services
             service.Spreadsheets.BatchUpdate(busr, spreadSheetId).Execute();
         }
 
-        private string GetCell(SheetsService service, string cell, string spreadSheetId = SpreadSheetId)
+        private string GetCell(SheetsService service, string cell, string spreadSheetId = UserSpreadSheetId)
         {
             SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadSheetId, cell);
             ValueRange response = request.Execute();
@@ -120,7 +132,7 @@ namespace QuestionManager.BLL.Services
         {
             var credentials = GetSheetCredentials();
             var services = GetService(credentials);
-            var count = GetCount(services, ColumnRange);
+            var count = GetCount(services, EmailRange, UserSpreadSheetId);
             var previousLastTicket = GetCell(services, $"D{count}");
 
             var firstTicket = 0;
@@ -133,8 +145,8 @@ namespace QuestionManager.BLL.Services
             data[2] = firstTicket.ToString();
             data[3] = lastTicket.ToString();
 
-            AddToSheet(services, data, count);
-            var newCount = GetCount(services, ColumnRange);
+            AddToSheet(services, data, count, UserSpreadSheetId);
+            var newCount = GetCount(services, EmailRange, UserSpreadSheetId);
 
             if(newCount > count)
             {
@@ -142,6 +154,39 @@ namespace QuestionManager.BLL.Services
             }
 
             throw new AppException("Result wasn't added to Google Sheets");
+        }
+
+        public bool CheckByEmail(string email)
+        {
+            var credentials = GetSheetCredentials();
+            var services = GetService(credentials);
+            var emailList = GetList(services, EmailRange, UserSpreadSheetId);
+
+            foreach(var mail in emailList.Values)
+            {
+                if (mail[0].ToString() == email)
+                    return true;
+            }
+            
+            return false;
+        }
+
+        public IList<IList<object>> GetAllQuestions()
+        {
+            var credentials = GetSheetCredentials();
+            var services = GetService(credentials);
+
+            var questions = GetList(services, QuestionsAndAnswearsRange, QuestionSpreadSheetId);
+            return questions.Values;
+        }
+
+        public string GetMessage()
+        {
+            var credentials = GetSheetCredentials();
+            var services = GetService(credentials);
+
+            var message = GetCell(services, MessageRange, MessageSheetId);
+            return message;
         }
     }
 }
