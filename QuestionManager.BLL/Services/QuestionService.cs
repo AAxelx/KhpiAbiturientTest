@@ -76,7 +76,7 @@ namespace QuestionManager.BLL.Services
                 
         public IServiceResponse SaveResult(List<AnswearModel> questions, string email)
         {
-            _userService.GetByEmailAsync(email);
+            _userService.GetByEmail(email);
             var score = CalculatePoints(questions);
             var user = new string[4] { email, score.ToString(), "", "" };
             var googleSheetsSuccess = _sheetsService.AddUser(user);

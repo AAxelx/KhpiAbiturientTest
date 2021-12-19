@@ -26,8 +26,10 @@ namespace QuestionManager
             services.AddDbContext<AppDbContext>();
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IGoogleSheetsService, GoogleSheetsService>();
+            services.AddTransient<ILetterService, LetterService>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IConfigurationService, ConfigurationService>();
             services.AddTransient(typeof(IDbRepository), typeof(DbRepository));
             services.AddAutoMapper(typeof(MappingProfile));
 

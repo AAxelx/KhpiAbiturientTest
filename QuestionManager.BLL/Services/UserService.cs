@@ -14,7 +14,7 @@ namespace QuestionManager.BLL.Services
             _googleSheetsService = googleSheetsService;
         }
 
-        public IServiceResponse GetByEmailAsync(string email)
+        public IServiceResponse GetByEmail(string email)
         {
             var created = _googleSheetsService.CheckByEmail(email);
 
@@ -26,9 +26,9 @@ namespace QuestionManager.BLL.Services
             throw new AppException("The user is already taking part");
         }
 
-        public IServiceResponse AddResultAsync(string email, int score)
+        public IServiceResponse AddResult(string email, int score)
         {
-            GetByEmailAsync(email);
+            GetByEmail(email);
 
             var data = new string[] { email, score.ToString() }; 
             var result = _googleSheetsService.AddUser(data);
