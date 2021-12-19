@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestionManager", "Question
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestionManager.BLL", "QuestionManager.BLL\QuestionManager.BLL.csproj", "{CCA995B1-ABB9-4DEC-9E18-449F61FD9855}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestionManager.DAL", "QuestionManager.DAL\QuestionManager.DAL.csproj", "{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{CCA995B1-ABB9-4DEC-9E18-449F61FD9855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCA995B1-ABB9-4DEC-9E18-449F61FD9855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCA995B1-ABB9-4DEC-9E18-449F61FD9855}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,7 +32,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4D98DAF8-2E68-457D-B770-F6C026B6FB18} = {1E19A668-CD39-4FD0-9389-A9E18723818C}
 		{CCA995B1-ABB9-4DEC-9E18-449F61FD9855} = {1E19A668-CD39-4FD0-9389-A9E18723818C}
-		{DD89DE5F-A741-434C-B7E4-6B30CCB62E4B} = {1E19A668-CD39-4FD0-9389-A9E18723818C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97C46648-EC50-4B47-BCB7-B4ADD5A868A5}

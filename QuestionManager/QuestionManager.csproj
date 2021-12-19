@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuestionManager.BLL\QuestionManager.BLL.csproj" />
-    <ProjectReference Include="..\QuestionManager.DAL\QuestionManager.DAL.csproj" />
   </ItemGroup>
 
 </Project>
