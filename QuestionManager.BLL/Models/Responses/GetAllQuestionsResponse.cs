@@ -1,11 +1,9 @@
-﻿using QuestionManager.BLL.Models.Responses.Abstractions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace QuestionManager.BLL.Models.Responses
 {
-    public class GetAllQuestionsResponse : IServiceResponse
+    public class GetAllQuestionsResponse
     {
         public List<QuestionModel> Questions { get; set; }
-        public string Message { get; set; }
     }
 }
