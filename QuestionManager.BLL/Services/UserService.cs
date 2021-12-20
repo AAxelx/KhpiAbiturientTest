@@ -1,6 +1,5 @@
 ﻿using QuestionManager.BLL.Helpers;
 using QuestionManager.BLL.Models.Responses;
-using QuestionManager.BLL.Models.Responses.Abstractions;
 using QuestionManager.BLL.Services.Abstractions;
 
 namespace QuestionManager.BLL.Services
@@ -14,7 +13,7 @@ namespace QuestionManager.BLL.Services
             _googleSheetsService = googleSheetsService;
         }
 
-        public IServiceResponse GetByEmail(string email)
+        public GetByEmailResponse GetByEmail(string email)
         {
             var created = _googleSheetsService.CheckByEmail(email);
 
@@ -24,21 +23,6 @@ namespace QuestionManager.BLL.Services
             }
 
             throw new AppException("The user is already taking part");
-        }
-
-        public IServiceResponse AddResult(string email, int score)
-        {
-            GetByEmail(email);
-
-            var data = new string[] { email, score.ToString() }; 
-            var result = _googleSheetsService.AddUser(data);
-
-            if (result)
-            {
-                return new AddResultResponse() { Success = true };
-            }
-
-            throw new AppException("The user wasn't added to sheet");
         }
     }
 }

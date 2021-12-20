@@ -1,6 +1,5 @@
 ﻿using QuestionManager.BLL.Models;
 using QuestionManager.BLL.Models.Responses;
-using QuestionManager.BLL.Models.Responses.Abstractions;
 using QuestionManager.BLL.Services.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace QuestionManager.BLL.Services
             _letterService = letterService;
         }
 
-        public IServiceResponse GetAll()
+        public GetAllQuestionsResponse GetAll()
         {
             var questions = _sheetsService.GetAllQuestions();
 
@@ -49,9 +48,23 @@ namespace QuestionManager.BLL.Services
                         if (complexity == 1 && countEasyQuestions != 4)
                             countEasyQuestions++;
                         else if (complexity == 2 && countMediumQuestions != 4)
+                        {
                             countMediumQuestions++;
+
+                            var temp = question[1];
+                            question[1] = question[3];
+                            question[3] = question[4];
+                            question[4] = temp;
+                        }
                         else if (complexity == 3 && countHardQuestions != 4)
+                        {
                             countHardQuestions++;
+
+                            var temp = question[1];
+                            question[1] = question[4];
+                            question[4] = question[3];
+                            question[3] = temp;
+                        }
                         else
                             continue;
 
@@ -74,7 +87,7 @@ namespace QuestionManager.BLL.Services
             throw new Helpers.KeyNotFoundException("Questions wasn't found");
         }
                 
-        public IServiceResponse SaveResult(List<AnswearModel> questions, string email)
+        public AddResultResponse SaveResult(List<AnswearModel> questions, string email)
         {
             _userService.GetByEmail(email);
             var score = CalculatePoints(questions);
@@ -85,7 +98,7 @@ namespace QuestionManager.BLL.Services
             var message = _messageService.CreateMessageDetails(email, textForLetter);
             var success = _letterService.Send(message);
 
-            return new CalculatePointsResponse() { Success = true };
+            return new AddResultResponse() { Success = true };
         }
 
         public int CalculatePoints(List<AnswearModel> answears)

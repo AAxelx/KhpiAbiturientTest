@@ -7,8 +7,6 @@ using Microsoft.OpenApi.Models;
 using QuestionManager.BLL.Helpers;
 using QuestionManager.BLL.Services;
 using QuestionManager.BLL.Services.Abstractions;
-using QuestionManager.DAL.DataAccess.Contracts;
-using QuestionManager.DAL.DataAccess.Implementations;
 
 namespace QuestionManager
 {
@@ -23,15 +21,12 @@ namespace QuestionManager
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>();
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IGoogleSheetsService, GoogleSheetsService>();
             services.AddTransient<ILetterService, LetterService>();
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IConfigurationService, ConfigurationService>();
-            services.AddTransient(typeof(IDbRepository), typeof(DbRepository));
-            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

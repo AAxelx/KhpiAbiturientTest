@@ -6,7 +6,7 @@ namespace QuestionManager.BLL
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

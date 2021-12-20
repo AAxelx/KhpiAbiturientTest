@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QuestionManager.BLL.Models.Requests;
 using QuestionManager.BLL.Services.Abstractions;
-using System.Threading.Tasks;
 
 namespace QuestionManager.Controllers
 {
@@ -16,7 +14,7 @@ namespace QuestionManager.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult GetByEmail(string email)
         {
             var response = _userService.GetByEmail(email);
