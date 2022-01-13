@@ -23,7 +23,7 @@ export default function configureStore(history: History, initialState?: Applicat
 
     return createStore(
         rootReducer,
-        initialState as any,
+        initialState,
         compose(applyMiddleware(...middleware), ...enhancers)
     );
 }

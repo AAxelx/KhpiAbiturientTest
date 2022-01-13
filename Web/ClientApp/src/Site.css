@@ -1,0 +1,27 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.over{
+    overflow-y: scroll;
+    width:100%;
+    height: 100%;
+}
+
+.main{
+    width: 30vw;
+    background-color: grey;
+    margin-top: 10vh;
+    margin-left: 30vw;
+}
