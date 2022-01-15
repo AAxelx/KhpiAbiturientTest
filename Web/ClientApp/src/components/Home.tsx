@@ -2,8 +2,10 @@
 import { connect } from 'react-redux';
 import "../Site.css"
 import { ApplicationState } from '../store';
-import { actionCreators } from '../store/SiteStore';
+import { actionCreators, Question } from '../store/SiteStore';
 import Timer from './Timer';
+import { RadioGroup, Radio } from '@adobe/react-spectrum'
+
 
 
 type State = {
@@ -12,6 +14,7 @@ type State = {
 
 type StateProps = {
     trueEmail?: boolean
+    question?: Question[]
 }
 
 type Props = typeof actionCreators & StateProps
@@ -37,7 +40,7 @@ class Home extends React.Component<Props,State>{
         return(
         <div className="over">
                 <div className="main">
-                    {this.props.trueEmail === undefined ? ( <Timer/> ) : (this.props.trueEmail ? this.checkboxs() : this.fail()) }
+                    {this.props.trueEmail === undefined ? this.start() : (this.props.trueEmail ? this.props.question!.map(_ => this.checkbox(_)) : this.fail())}
             </div>
         </div>)
     }
@@ -50,6 +53,7 @@ class Home extends React.Component<Props,State>{
                 Чем больше правильных ответов вы дадите, тем больше ваши шансы на выигрыш в розыгрыше который пройдет 00.00.2022 в 00.00 в прямом эфире.
                 Тест длится 5 минут и содержит 12 вопросов.
                 Введите ваш email для связи и начинайте тест. Желаем удачи!
+                <Timer />
                 <form>
                     <label>
                         Введите Email:
@@ -70,12 +74,22 @@ class Home extends React.Component<Props,State>{
         )
     }
 
-    private checkboxs = () => {
+    private checkbox = (q: Question) => {
         return (
-            <>
-            </>
+            <div>
+                <Timer />
+                <RadioGroup label={q.question} defaultValue="" onChange={(value: string) => {
+                    this.props.editAnswers(q.id, value);
+                }}>
+                    <Radio value={q.first}>{q.first}</Radio>
+                    <Radio value={q.second}>{q.second}</Radio>
+                    <Radio value={q.third}>{q.third}</Radio>
+                </RadioGroup>
+            </div>
         )
     }
+
+    
 }
 
 const mapStateToProps = (state: ApplicationState) => {

@@ -1,8 +1,5 @@
 ﻿import * as React from 'react';
-import { connect } from 'react-redux';
 import "../Site.css"
-import { ApplicationState } from '../store';
-import { actionCreators } from '../store/SiteStore';
 
 
 type State = {
@@ -42,6 +39,7 @@ export default class Timer extends React.Component<Props, State> {
     componentDidMount() {
         let timeLeftVar = this.secondsToTime(this.state.seconds);
         this.setState({ time: timeLeftVar });
+        this.startTimer();
     }
 
     startTimer() {
@@ -67,7 +65,6 @@ export default class Timer extends React.Component<Props, State> {
     render() {
         return (
             <div>
-                <button onClick={this.startTimer}>Start</button>
                 {this.state.time!.m}:{this.state.time!.s}
             </div>
         );
